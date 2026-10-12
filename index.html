@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Valyuta Konvertori</title>
+  <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+
+  <div class="converter-card">
+    <h2 class="title">Valyuta Konvertori</h2>
+    
+    <div class="input-group">
+      <label for="amount">Summa:</label>
+      <input type="number" id="amount" placeholder="Summani kiriting..." oninput="calculate()">
+    </div>
+
+    <div class="input-group">
+      <label for="type">Yo'nalish:</label>
+      <select id="type" onchange="calculate()">
+        <option value="somToUsd">So'mdan ➔ Dollarga ($)</option>
+        <option value="usdToSom">Dollardan ($) ➔ So'mga</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="rate">Kurs (1 $ = ... so'm):</label>
+      <input type="number" id="rate" value="12500" oninput="calculate()">
+    </div>
+
+    <div class="result-box" id="result">
+      Natija: 0
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const type = document.getElementById('type').value;
+      const rate = parseFloat(document.getElementById('rate').value) || 12500;
+      const resultBox = document.getElementById('result');
+
+      if (amount <= 0) {
+        resultBox.innerText = "Natija: 0";
+        return;
+      }
+
+      if (type === 'somToUsd') {
+        const usd = (amount / rate).toFixed(2);
+        resultBox.innerText = `${amount.toLocaleString()} so'm = ${usd} $`;
+      } else {
+        const som = (amount * rate).toLocaleString();
+        resultBox.innerText = `${amount} $ = ${som} so'm`;
+      }
+    }
+  </script>
+
+</body>
+</html>
